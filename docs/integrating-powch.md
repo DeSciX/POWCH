@@ -46,13 +46,14 @@ const user = await powch.auth({ require: ['verified_email', 'wallet_address'] })
 
 - **`bridgeUrl` is required and has no default.** It decides where users type a passkey and unlock a wallet, so the SDK never guesses it; an unset value throws with the ways to set it.
 - **Serve the page over HTTPS** with a certificate the browser trusts.
-- **Send a `Permissions-Policy` header** that delegates the WebAuthn permissions to the Powch origin:
+- **If your site sends a `Permissions-Policy` header, delegate `publickey-credentials-get` to the Powch origin**, so Returning sign-in can run in Powch's frame:
 
   ```
-  Permissions-Policy: publickey-credentials-create=(self "https://powch.descix.net"), publickey-credentials-get=(self "https://powch.descix.net")
+  Permissions-Policy: publickey-credentials-get=(self "https://powch.descix.net")
   ```
 
-  `PowchClient` sets `allow="publickey-credentials-get *; publickey-credentials-create *"` on its iframe; the header is the host's half.
+  `PowchClient` sets `allow="publickey-credentials-get *; publickey-credentials-create *"` on its iframe. A new account is never created in the frame: New account opens Powch's own page top-level in a popup ([origin-model.md §3](./origin-model.md#3-passkeys-where-they-are-created)).
+- **The Powch iframe must allow popups.** In `@descix/app-sdk` 0.6.0 `PowchClient` creates it with `sandbox="allow-scripts allow-same-origin"`, so on a standalone site New account cannot open the Powch window and the sidebar shows that the window was blocked; Returning sign-in is unaffected ([origin-model.md §4](./origin-model.md#4-a-standalone-host-embedding-powch)).
 
 `PowchClient` methods in `@descix/app-sdk` 0.6.0:
 
@@ -106,7 +107,7 @@ The field names a host can request: `verified_email`, `email`, `wallet_address`,
 
 Every completed sign-in for an origin writes a **Site Pass** card for that origin in the user's Powch vault: the site's name, when it was last used, the fields granted on that sign-in, and the identity card it is linked to. A host may pass `brand: { name, iconUrl, bgColor, shortDescription }` in the sign-in payload to name and style its Site Pass.
 
-The Site Pass and the remembered consent are kept per host origin, in Powch's encrypted local store at the Powch origin. They never sync to the cloud vault. See [origin-model.md §2](./origin-model.md#2-what-lives-where).
+The Site Pass and the remembered consent are kept per host origin, in Powch's encrypted local store at the Powch origin. They never sync to the cloud vault. See [origin-model.md §2](./origin-model.md#5-what-lives-where).
 
 ## 5. The visibility rule
 

@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 
-// The page must be served over HTTPS, and it must delegate the two WebAuthn permissions to the
-// Powch origin, so the passkey ceremony can run inside Powch's cross-origin iframe.
+// The page must be served over HTTPS, and it delegates publickey-credentials-get to the Powch
+// origin, so Returning sign-in can run inside Powch's cross-origin iframe. A passkey is never
+// created in the iframe: New account opens Powch's own page top-level in a popup.
 // VITE_POWCH_BRIDGE_URL has no default: an unset value stops the dev server here.
 export default defineConfig(() => {
   const powchUrl = process.env.VITE_POWCH_BRIDGE_URL;
@@ -18,7 +19,7 @@ export default defineConfig(() => {
       port: 5176,
       https: true,
       headers: {
-        'Permissions-Policy': `publickey-credentials-create=(self "${powchOrigin}"), publickey-credentials-get=(self "${powchOrigin}")`,
+        'Permissions-Policy': `publickey-credentials-get=(self "${powchOrigin}")`,
       },
     },
   };

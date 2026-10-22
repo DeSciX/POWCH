@@ -20,7 +20,7 @@ On Cowork: chat **+** → **Add plugins…** → **Add marketplace**.
 
 ## Integrating Powch in one paragraph
 
-An app hosted in the DeSciX App Shell uses `DeSciX.powch` (`login`, `signMessage`, `signTransaction`, `signTypedData`, …); the shell owns the Powch bridge. A standalone site uses `PowchClient` from `@descix/app-sdk/powch-client` with `bridgeUrl: 'https://powch.descix.net/'`, served over HTTPS with a `Permissions-Policy` header that delegates `publickey-credentials-create` and `publickey-credentials-get` to `https://powch.descix.net`. Every sign-in names the fields it asks for in `require`, and only the user's approval shares them. Start at [docs/integrating-powch.md](./docs/integrating-powch.md).
+An app hosted in the DeSciX App Shell uses `DeSciX.powch` (`login`, `signMessage`, `signTransaction`, `signTypedData`, …); the shell owns the Powch bridge. A standalone site uses `PowchClient` from `@descix/app-sdk/powch-client` with `bridgeUrl: 'https://powch.descix.net/'`, served over HTTPS; if the site sends a `Permissions-Policy` header it delegates `publickey-credentials-get` to `https://powch.descix.net`. New account in a framed Powch always opens Powch's own page top-level in a popup, so the Powch iframe must allow popups. Every sign-in names the fields it asks for in `require`, and only the user's approval shares them. Start at [docs/integrating-powch.md](./docs/integrating-powch.md).
 
 The App Developer Runbook is https://descix.net/prod/daita-docs/site/app-sdk/app-developer-runbook.html.
 

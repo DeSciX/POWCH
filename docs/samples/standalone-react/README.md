@@ -30,10 +30,11 @@ Open **https://localhost:5176/**.
 - The dev server serves HTTPS (`@vitejs/plugin-basic-ssl`) and sends this header on every response:
 
   ```
-  permissions-policy: publickey-credentials-create=(self "https://powch.descix.net"), publickey-credentials-get=(self "https://powch.descix.net")
+  permissions-policy: publickey-credentials-get=(self "https://powch.descix.net")
   ```
 
-  The header delegates the two WebAuthn permissions to the Powch origin, so the passkey ceremony can run inside Powch's cross-origin iframe. `PowchClient` sets the matching `allow="publickey-credentials-get *; publickey-credentials-create *"` on the iframe it creates.
+  The header delegates `publickey-credentials-get` to the Powch origin, so Returning sign-in runs inside Powch's cross-origin iframe. A passkey is never created in the iframe: New account opens Powch's own page top-level in a popup ([../../origin-model.md §3](../../origin-model.md#3-passkeys-where-they-are-created)).
+- With `@descix/app-sdk` 0.6.0, **New account does not work in this sample**: `PowchClient` creates its iframe with `sandbox="allow-scripts allow-same-origin"`, which has no `allow-popups`, so the Powch window cannot open and the sidebar shows that it was blocked. Sign in with an existing Powch account (Returning); every other button works.
 - `@vitejs/plugin-basic-ssl` makes a self-signed certificate. The browser judges WebAuthn on the whole tab's TLS state, so the passkey ceremony needs a certificate the browser trusts; with an untrusted one it fails with `User cancelled`. To serve with a certificate your machine trusts, replace `basicSsl()` in `vite.config.js` with `server.https: { key, cert }` pointing at that certificate's files.
 
 ## SDK API used
@@ -55,5 +56,5 @@ Open **https://localhost:5176/**.
 |------|------------|
 | `index.html` | The host page: nav, buttons, result panel |
 | `app.js` | The `PowchClient` wiring for every button |
-| `vite.config.js` | HTTPS, the `Permissions-Policy` header, and the required `VITE_POWCH_BRIDGE_URL` |
+| `vite.config.js` | HTTPS, the `Permissions-Policy` header for `publickey-credentials-get`, and the required `VITE_POWCH_BRIDGE_URL` |
 | `package.json` | `@descix/app-sdk` 0.6.0, Vite 6, `@vitejs/plugin-basic-ssl` |
