@@ -1,0 +1,15 @@
+{
+  "kb_name": "General",
+  "publish_tier": "P",
+  "_purpose": "The Powch developer docs: integrating Powch with @descix/app-sdk 0.6.0 and @descix/cli 4.2.0, the origin model, the runbook's Powch passages and the standalone sample. Every source is a single file, so the Tier-P deny lint reads each one. samples/standalone-react/index.html is not listed: .html is not a processable extension.",
+  "sources": [
+    { "path": "docs/README.md", "ref": "main", "tier": 1, "doc_class": "guide", "doc_type": "documentation", "syncignore": [] },
+    { "path": "docs/integrating-powch.md", "ref": "main", "tier": 1, "doc_class": "guide", "doc_type": "documentation", "syncignore": [] },
+    { "path": "docs/origin-model.md", "ref": "main", "tier": 1, "doc_class": "guide", "doc_type": "documentation", "syncignore": [] },
+    { "path": "docs/runbook-powch.md", "ref": "main", "tier": 1, "doc_class": "guide", "doc_type": "documentation", "syncignore": [] },
+    { "path": "docs/samples/standalone-react/README.md", "ref": "main", "tier": 1, "doc_class": "guide", "doc_type": "documentation", "syncignore": [] },
+    { "path": "docs/samples/standalone-react/app.js", "ref": "main", "tier": 1, "doc_class": "code", "doc_type": "code", "syncignore": [] },
+    { "path": "docs/samples/standalone-react/vite.config.js", "ref": "main", "tier": 1, "doc_class": "code", "doc_type": "code", "syncignore": [] },
+    { "path": "docs/samples/standalone-react/package.json", "ref": "main", "tier": 1, "doc_class": "code", "doc_type": "code", "syncignore": [] }
+  ]
+}

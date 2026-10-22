@@ -1,0 +1,28 @@
+{
+  "name": "powch",
+  "owner": {
+    "name": "DeSciX",
+    "url": "https://github.com/DeSciX"
+  },
+  "metadata": {
+    "description": "Powch is DeSciX's identity and wallet: a passkey is the identity, keys derive in the browser, and every app reaches Powch as a cross-origin iframe. This marketplace carries the powch-specialist plugin, which answers Powch integration questions from the handbook and the powch knowledge base.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "powch-specialist",
+      "source": "./plugins/powch-specialist",
+      "description": "Powch specialist: answers app developers' Powch integration questions (PowchClient on a standalone site, DeSciX.powch in the App Shell, the origin model, sign-in request shapes, device login, consent and Site Pass) from the DeSciX handbook and the powch knowledge base over the DeSciX connector, quoting the section each answer comes from.",
+      "category": "development",
+      "keywords": [
+        "powch",
+        "descix",
+        "passkey",
+        "webauthn",
+        "wallet",
+        "sso",
+        "app-sdk"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# OS noise
+.DS_Store
+
+node_modules/
+dist/
+
+# DeSciX: workspace.json (v3, repo facts only) and manifests are tracked; wallet and sync-state are per-developer and never tracked.
+.descix/*
+!.descix/workspace.json
+!.descix/manifests/
+.descix/wallet.json
+.descix/sync-state/

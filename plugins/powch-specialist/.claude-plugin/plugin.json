@@ -1,0 +1,23 @@
+{
+  "name": "powch-specialist",
+  "version": "0.1.0",
+  "description": "Powch specialist: answers app developers' Powch integration questions (PowchClient on a standalone site, DeSciX.powch in the App Shell, the origin model, sign-in request shapes, device login, consent and Site Pass) from the DeSciX handbook and the powch knowledge base over the DeSciX connector, quoting the section each answer comes from.",
+  "author": {
+    "name": "DeSciX",
+    "url": "https://github.com/DeSciX"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "keywords": [
+    "powch",
+    "descix",
+    "passkey",
+    "webauthn",
+    "wallet",
+    "sso",
+    "app-sdk"
+  ],
+  "agents": [
+    "./agents/powch-specialist.agent.md"
+  ],
+  "mcpServers": "./.mcp.json"
+}
