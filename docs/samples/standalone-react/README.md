@@ -6,6 +6,8 @@ The host page has its own theme (blue/purple), so it is clearly separate from Po
 
 The page is plain JavaScript; it imports no React. It uses `PowchClient` from `@descix/app-sdk/powch-client` (`@descix/app-sdk` 0.6.0). It is the pattern for a site that is NOT hosted inside the DeSciX App Shell. An app inside the App Shell does not construct a `PowchClient`; it uses the shell's `DeSciX.powch` (see [../../integrating-powch.md](../../integrating-powch.md)).
 
+This is the canonical Powch integrator sample; the tester app `DeSciX/powch-sdktest` is built from it.
+
 ## Features
 
 - **Nav**: `createButton()`: Sign in with Powch when signed out; the email (or "My Powch") when signed in; a click toggles the Powch panel.

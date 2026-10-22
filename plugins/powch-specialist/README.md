@@ -2,7 +2,7 @@
 
 A sub-agent that answers app developers' questions about integrating **Powch**, DeSciX's identity and wallet: `PowchClient` on a standalone site, `DeSciX.powch` inside the App Shell, the origin model, sign-in request shapes, device login, consent and Site Pass.
 
-The agent carries no Powch documentation of its own. It reads the `powch` app's knowledge base and `tell_me_how` over the DeSciX connector, and the App Developer Runbook, and quotes the section each answer comes from. What those sources do not state, it answers "not in the handbook".
+The agent carries no Powch documentation of its own. It reads the `powch` knowledge base for Powch integration and the `daita-docs` knowledge base for the App Developer Runbook, and `tell_me_how`, over the DeSciX connector, and names the knowledge base and section each answer comes from. What those sources do not state, it answers "not in the handbook".
 
 | Piece | What it does |
 |---|---|

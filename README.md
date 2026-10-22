@@ -16,13 +16,17 @@ This repository is the **powch** community's home. It holds:
 
 On Cowork: chat **+** → **Add plugins…** → **Add marketplace**.
 
-**powch-specialist** is a sub-agent that answers Powch integration questions for app developers: `PowchClient` on a standalone site, `DeSciX.powch` inside the App Shell, the origin model, sign-in request shapes, device login, consent and Site Pass. It answers from the `powch` knowledge base and `tell_me_how` over the DeSciX connector (`https://descix.net/mcp`) and from the App Developer Runbook, and quotes the section each answer comes from. Connect the connector once: Claude Code `/mcp` → `descix` → sign in. See [plugins/powch-specialist/README.md](./plugins/powch-specialist/README.md).
+**powch-specialist** is a sub-agent that answers Powch integration questions for app developers: `PowchClient` on a standalone site, `DeSciX.powch` inside the App Shell, the origin model, sign-in request shapes, device login, consent and Site Pass. It answers Powch integration questions from the `powch` knowledge base and runbook questions from the `daita-docs` knowledge base, both over the DeSciX connector (`https://descix.net/mcp`), and names the knowledge base and section each answer comes from. Connect the connector once: Claude Code `/mcp` → `descix` → sign in. See [plugins/powch-specialist/README.md](./plugins/powch-specialist/README.md).
 
 ## Integrating Powch in one paragraph
 
 An app hosted in the DeSciX App Shell uses `DeSciX.powch` (`login`, `signMessage`, `signTransaction`, `signTypedData`, …); the shell owns the Powch bridge. A standalone site uses `PowchClient` from `@descix/app-sdk/powch-client` with `bridgeUrl: 'https://powch.descix.net/'`, served over HTTPS with a `Permissions-Policy` header that delegates `publickey-credentials-create` and `publickey-credentials-get` to `https://powch.descix.net`. Every sign-in names the fields it asks for in `require`, and only the user's approval shares them. Start at [docs/integrating-powch.md](./docs/integrating-powch.md).
 
 The App Developer Runbook is https://descix.net/prod/daita-docs/site/app-sdk/app-developer-runbook.html.
+
+## Workspace
+
+This repository holds the PROD workspace for app `powch` (knowledge base `General` and the marketplace), written by `descix app init`; the Powch microservice's DEV platform workspace lives in its own private repository.
 
 ## The tester app
 

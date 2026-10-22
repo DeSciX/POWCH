@@ -2,7 +2,7 @@
 
 Powch is DeSciX's identity and wallet. The **passkey is the identity**: one biometric creates the passkey, and the master wallet and the vault keys derive from it in the browser. Everything else the user holds (email, wallets, Site Passes) is stored as **cards** in an encrypted vault. The server stores ciphertext only and never holds a key.
 
-Powch lives on one origin of its own, `https://powch.descix.net`, the **identity silo**. Every app reaches it as a cross-origin iframe and talks to it only by postMessage. That boundary is the design: an app never sees the passkey, the vault or Powch's DOM. The origin model is in [origin-model.md](./origin-model.md).
+Powch lives on one origin of its own, `https://powch.descix.net`, the **identity silo**. Every app reaches it as a cross-origin iframe and talks to it only by postMessage. That boundary is the design: an app never sees the passkey, the vault or Powch's DOM. The origin model is in [origin-model.md](./origin-model.md). The App Developer Runbook is https://descix.net/prod/daita-docs/site/app-sdk/app-developer-runbook.html.
 
 This guide uses only the published `@descix/app-sdk` 0.6.0 and `@descix/cli` 4.2.0.
 
@@ -30,7 +30,7 @@ The members of `DeSciX.powch` in `@descix/app-sdk` 0.6.0: `login(opts)`, `logout
 
 `DeSciX.powch` and `DeSciX.config` appear once a Powch bridge exists and the shell is ready; the shell fires the window event `DESCX_BRIDGE_READY` at that moment. Gate on that event for `powch` and `config` only. The shell's view API (`DeSciX.view`) does not wait on Powch.
 
-Run it locally with `descix serve` and open the gateway root, `https://localhost:<Port>/` (default port `5173`): that is your app inside the shell with Powch sign-in. `/p/<app_id>` is the bare iframe target with no shell and no sign-in around it. Passkey sign-in in the shell needs the gateway's certificate trusted: `descix dev-certs check` exits 0 when it is (`Status: trusted`); if not, run `descix dev-certs trust` once, then quit and reopen the browser. A `User cancelled` on sign-in is this.
+Run it locally with `descix serve` and open the gateway root, not `/p/<app_id>`; passkey sign-in there needs the gateway's certificate trusted. The commands are in the App Developer Runbook §5.
 
 ### 1.2 A standalone site: `PowchClient`
 
@@ -114,17 +114,11 @@ The Site Pass and the remembered consent are kept per host origin, in Powch's en
 - **Every request opens the UI first.** The bridge calls `openUi()` before every request, then posts after two animation frames, so the sidebar paints before Powch handles the request.
 - **Powch refuses requests while its tab is not visible.** A request from a backgrounded tab is answered with `{ "type": "POWCH_RESPONSE", "requestId": "...", "success": false, "error": "Powch UI not visible" }` and is not processed. `POWCH_LOGOUT` is the one command exempt from this rule.
 
-## 6. Device login (`descix login`)
+## 6. Device login and the DeSciX connector
 
-The CLI signs in with Powch through a device-code flow. `descix login` requests a code, opens the browser at `https://descix.net/device?code=<code>` and polls until the browser confirms. The page shows **Complete CLI Login** and one button, **Sign In with Powch**; it opens the Powch panel on the right edge, the passkey ceremony runs in that panel, and the page ends with **CLI Login Complete — You can return to your terminal.** The credential is saved to `.descix/wallet.json` at the workspace root, which is never committed. A first-time account is created by the same ceremony; there is no separate sign-up.
+Both sign in with Powch. `descix login` (a device-code flow whose browser page opens the Powch panel for the passkey ceremony) is in the App Developer Runbook §3; the DeSciX connector at `https://descix.net/mcp` is in the App Developer Runbook §4, under "The connector, for claude.ai and any MCP client".
 
-`descix login` signs in with whichever passkey the browser offers first. If the account is wrong, run `descix logout`, then `descix login` and pick the right passkey in the browser's chooser. `descix whoami` prints the environment line, User ID, Email, Wallet and `Session: Valid`.
-
-## 7. Connecting Claude (the DeSciX connector)
-
-The DeSciX connector, `https://descix.net/mcp`, is a remote HTTP MCP server that signs the user in with OAuth, and the sign-in is Powch. `https://descix.net/connect` is the sign-in page the browser opens, not an MCP server; a connector pointed at it does not work. In Claude Code: `claude mcp add --transport http descix https://descix.net/mcp`, after which `claude mcp list` prints `descix: https://descix.net/mcp (HTTP) - ! Needs authentication` until sign-in.
-
-## 8. What Powch never does
+## 7. What Powch never does
 
 - **No auth-UI fallback.** An app never renders its own password form, passkey prompt or another sign-in provider when Powch does not answer. It fails loud and names what is unreachable.
 - **No server-side keys.** Keys derive in the browser from the passkey; the server stores ciphertext. An app never asks for, receives or stores a private key, a seed phrase or a service key to act for the user.

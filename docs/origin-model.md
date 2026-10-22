@@ -69,7 +69,7 @@ These are the differences:
 
 1. **One host origin for every served app.** On production each app is its own origin. Under serve every app is `https://localhost:<gateway port>`. Switching `--app` keeps the origin, so the shell's session carries over from one app to the next, and so do Powch's Site Pass and remembered consent for that origin, held in the `localhost` partition (§1.2).
 2. **No first-party auto-grant.** Production Powch treats only `https://descix.net` as first-party. A `localhost` host is never first-party, so the apex's email auto-grant is never exercised under serve.
-3. **Local TLS depends on the dev certificate.** The host origin uses the workspace dev certificate, and the browser judges WebAuthn on the whole tab's TLS state. With an untrusted certificate, the passkey ceremony in the Powch iframe fails with `User cancelled`. `descix dev-certs check` exits 0 when the certificate is trusted; `descix dev-certs trust` trusts it (then quit and reopen the browser).
+3. **Local TLS depends on the dev certificate.** The host origin uses the workspace dev certificate, and the browser judges WebAuthn on the whole tab's TLS state. With an untrusted certificate, the passkey ceremony in the Powch iframe fails with `User cancelled`. Trusting it is `descix dev-certs`, in the App Developer Runbook §5.
 
 ## 5. What a user sees on a new host origin
 
