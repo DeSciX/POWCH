@@ -1,0 +1,14 @@
+{
+  "version": "3.0",
+  "workspaceRoot": "/Users/essam/Code/POWCH",
+  "type": "workspace",
+  "env": {
+    "environment": "PROD",
+    "apiUrl": "https://descix.net",
+    "app": {
+      "appId": "powch",
+      "kbId": "General",
+      "communityId": "powch"
+    }
+  }
+}
